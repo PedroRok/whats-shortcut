@@ -35,18 +35,18 @@ const Popup: React.FC = () => {
   };
 
   return (
-    <div className="w-full p-4 font-sans text-red-500">
+    <div className="w-full p-4 font-sans text-whatsapp-green">
       <h1 className="text-lg font-bold mb-3">WhatsApp Shortcut Buttons</h1>
       
       <div className="mb-4">
         <h2 className="text-base font-semibold mb-2">Seus Atalhos</h2>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 text-white">
           {emojis.map((item, index) => (
-            <div key={index} className="flex items-center bg-gray-100 py-1 px-2.5 rounded">
+            <div key={index} className="flex items-center bg-whatsapp-dark-green py-1 px-2.5 rounded">
               <span className="mr-1">{item.emoji}</span>
               <span>→ {item.text.slice(0, 15)}{item.text.length > 15 ? '...' : ''}</span>
               <button 
-              className="bg-transparent border-none text-red-500 cursor-pointer text-sm ml-1"
+              className="bg-transparent border-none text-whatsapp-green cursor-pointer text-sm ml-1"
               onClick={() => handleDeleteEmoji(index)}>×</button>
             </div>
           ))}
@@ -71,7 +71,7 @@ const Popup: React.FC = () => {
         />
         <button 
           type="submit" 
-          className="px-2.5 py-1.5 bg-whatsapp text-white border-none rounded hover:bg-whatsapp-dark transition-colors"
+          className="px-2.5 py-1.5 bg-whatsapp-green text-white border-none rounded hover:bg-whatsapp-dark transition-colors"
         >
           Adicionar
         </button>

@@ -41,7 +41,7 @@ const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({
   };
 
   return (
-    <div className="flex p-2.5 transparente rounded overflow-x-auto mb-1.5 shortcut-buttons">
+    <div className="flex p-0.5 transparente rounded overflow-x-auto mb-1.5 ml-3 shortcut-buttons">
       {emojis.map((item, index) => (
         <button
           key={index}

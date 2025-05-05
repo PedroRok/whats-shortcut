@@ -592,6 +592,10 @@ video {
   margin-left: 0.25rem;
 }
 
+.ml-3 {
+  margin-left: 0.75rem;
+}
+
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -685,11 +689,6 @@ video {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
-.bg-gray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
 .bg-transparent {
   background-color: transparent;
 }
@@ -699,20 +698,30 @@ video {
   background-color: rgb(36 38 38 / var(--tw-bg-opacity));
 }
 
+.bg-whatsapp-dark-green {
+  --tw-bg-opacity: 1;
+  background-color: rgb(20 77 55 / var(--tw-bg-opacity));
+}
+
+.bg-whatsapp-green {
+  --tw-bg-opacity: 1;
+  background-color: rgb(33 192 99 / var(--tw-bg-opacity));
+}
+
+.p-0 {
+  padding: 0px;
+}
+
+.p-0\.5 {
+  padding: 0.125rem;
+}
+
 .p-1 {
   padding: 0.25rem;
 }
 
 .p-1\.5 {
   padding: 0.375rem;
-}
-
-.p-2 {
-  padding: 0.5rem;
-}
-
-.p-2\.5 {
-  padding: 0.625rem;
 }
 
 .p-4 {
@@ -766,9 +775,9 @@ video {
   font-weight: 600;
 }
 
-.text-red-500 {
+.text-whatsapp-green {
   --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
+  color: rgb(33 192 99 / var(--tw-text-opacity));
 }
 
 .text-white {
