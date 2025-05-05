@@ -1,0 +1,66 @@
+import React, { useState, useEffect } from "react";
+import { getEmojis } from "../utils/storage";
+import { EmojiData } from "../utils/types";
+
+interface ShortcutButtonsProps {
+  inputElement: HTMLElement;
+}
+
+const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({
+  inputElement
+}) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [emojis, setEmojis] = useState<EmojiData[]>([]);
+
+  useEffect(() => {
+    const loadEmojis = async () => {
+      const savedEmojis = await getEmojis();
+      setEmojis(savedEmojis);
+    };
+
+    loadEmojis();
+
+    // Atualizar quando o storage mudar
+    chrome.storage.onChanged.addListener((changes) => {
+      if (changes.emojis) {
+        setEmojis(changes.emojis.newValue);
+      }
+    });
+  }, []);
+
+  const insertText = (text: string) => {
+    const event = new Event("input", { bubbles: true });
+    inputElement.dispatchEvent(event);
+    inputElement.focus();
+    document.execCommand("insertText", false, text);
+  };
+
+  const openPopup = () => {
+    // Abrir o popup da extensão
+    chrome.runtime.sendMessage({ action: "openPopup" });
+  };
+
+  return (
+    <div className="flex p-2.5 transparente rounded overflow-x-auto mb-1.5 shortcut-buttons">
+      {emojis.map((item, index) => (
+        <button
+          key={index}
+          className="min-w-[30px] min-h-[30px] h-[30px] flex items-center justify-center mr-1.5 bg-whatsapp-box-color border rounded-full cursor-pointer text-base transition-all hover:bg-whatsapp-box-hover"
+          onClick={() => insertText(item.text)}
+          title={item.text}
+        >
+          {item.emoji}
+        </button>
+      ))}
+      <button
+        className="min-w-[30px] min-h-[30px] h-[30px] flex items-center justify-center mr-1.5 bg-whatsapp-box-color border rounded-full cursor-pointer text-base transition-all bg-whatsapp text-white border-none font bold"
+        onClick={() => openPopup}
+        title="Adicionar atalho"
+      >
+        +
+      </button>
+    </div>
+  );
+};
+
+export default ShortcutButtons;
