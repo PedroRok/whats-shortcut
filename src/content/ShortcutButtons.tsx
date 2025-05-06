@@ -9,7 +9,6 @@ interface ShortcutButtonsProps {
 const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({
   inputElement
 }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
   const [emojis, setEmojis] = useState<EmojiData[]>([]);
 
   useEffect(() => {
@@ -20,7 +19,6 @@ const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({
 
     loadEmojis();
 
-    // Atualizar quando o storage mudar
     chrome.storage.onChanged.addListener((changes) => {
       if (changes.emojis) {
         setEmojis(changes.emojis.newValue);
@@ -36,7 +34,6 @@ const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({
   };
 
   const openPopup = () => {
-    // Abrir o popup da extensão
     chrome.runtime.sendMessage({ action: "openPopup" });
   };
 
@@ -54,7 +51,7 @@ const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({
       ))}
       <button
         className="min-w-[30px] min-h-[30px] h-[30px] flex items-center justify-center mr-1.5 bg-whatsapp-box-color border rounded-full cursor-pointer text-base transition-all bg-whatsapp text-white border-none font bold"
-        onClick={() => openPopup}
+        onClick={openPopup}
         title="Adicionar atalho"
       >
         +

@@ -36,7 +36,7 @@ const Popup: React.FC = () => {
 
   return (
     <div className="w-full p-4 font-sans text-whatsapp-green">
-      <h1 className="text-lg font-bold mb-3">WhatsApp Shortcut Buttons</h1>
+      <h1 className="text-lg font-bold mb-3">Whats Shortcut</h1>
       
       <div className="mb-4">
         <h2 className="text-base font-semibold mb-2">Seus Atalhos</h2>
