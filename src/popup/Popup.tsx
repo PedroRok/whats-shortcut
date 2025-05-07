@@ -60,14 +60,13 @@ const Popup: React.FC = () => {
           value={newEmoji}
           onChange={(e) => setNewEmoji(e.target.value)}
           maxLength={2}
-          className="flex-none w-16 p-1.5 border border-gray-300 rounded"
+          className="flex-none w-8 p-1.5 border border-gray-300 rounded h-8"
         />
-        <input
-          type="text"
+        <textarea
           placeholder="Texto do atalho"
           value={newText}
           onChange={(e) => setNewText(e.target.value)}
-          className="flex-1 p-1.5 border border-gray-300 rounded"
+          className="flex-1 p-1.5 border border-gray-300 rounded resize-y max-h-24 h-8 min-h-[2rem]"
         />
         <button 
           type="submit" 

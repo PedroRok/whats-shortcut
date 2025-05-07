@@ -150,3 +150,4 @@ ehthumbs.db
 
 # Project-specific files
 whats-shortcut-config.json
+src/compiled.css
