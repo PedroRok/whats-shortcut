@@ -1,6 +1,5 @@
 import { EmojiData } from './types';
 
-// Emojis padrão
 const DEFAULT_EMOJIS: EmojiData[] = [
   { emoji: '👋', text: 'Olá! Como posso ajudar?' },
   { emoji: '👍', text: 'Ok, entendido!' },

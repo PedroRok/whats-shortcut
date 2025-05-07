@@ -40,6 +40,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: 'public' },
+        { from: 'src/compiled.css', to: 'compiled.css' },
       ],
     }),
   ],
