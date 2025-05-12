@@ -35,29 +35,42 @@ const Popup: React.FC = () => {
     await saveEmojis(updatedEmojis);
   };
 
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      console.error('Erro ao copiar:', err);
+    }
+  };
+
   return (
     <div className="w-full p-4 font-sans text-whatsapp-green relative">
       <div className="flex flex-col items-center mb-4">
         <img src="icons/icon128.png" alt="Whats Shortcut Icon" className="w-8 h-8 mb-2" />
         <h1 className="text-lg font-bold">Whats Shortcut</h1>
-        <div className="mb-3">por Pedro Lucas <u><a href="https://pedrorok.com">(pedrorok.com)</a></u></div>
+        <div className="mb-2">por Pedro Lucas <u><a href="https://pedrorok.com">(pedrorok.com)</a></u></div>
       </div>
       <section className="mb-4">
         <h2 className="text-base font-semibold mb-2">Seus Atalhos</h2>
-        <div className="flex flex-wrap gap-1.5 text-white">
+        <div className="flex flex-wrap gap-1.5 text-white max-h-32 overflow-y-scroll">
           {emojis.map((item, index) => (
             <div
               key={index}
               className="flex items-center bg-whatsapp-dark-green py-1 px-2.5 rounded"
             >
               <span className="mr-1">{item.emoji}</span>
-              <span>
+              <button
+                onClick={() => copyToClipboard(item.text)} 
+                title="Copiar texto"
+                >
                 → {item.text.slice(0, 15)}
                 {item.text.length > 15 ? "..." : ""}
-              </span>
+              </button>
               <button
                 className="bg-transparent border-none text-whatsapp-green cursor-pointer text-sm ml-1"
                 onClick={() => handleDeleteEmoji(index)}
+                title="Remover atalho"
               >
                 ×
               </button>
