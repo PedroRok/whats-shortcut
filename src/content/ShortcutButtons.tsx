@@ -6,9 +6,7 @@ interface ShortcutButtonsProps {
   inputElement: HTMLElement;
 }
 
-const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({
-  inputElement
-}) => {
+const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({ inputElement }) => {
   const [emojis, setEmojis] = useState<EmojiData[]>([]);
 
   useEffect(() => {
@@ -26,11 +24,19 @@ const ShortcutButtons: React.FC<ShortcutButtonsProps> = ({
     });
   }, []);
 
-  const insertText = (text: string) => {
-    const event = new Event("input", { bubbles: true });
-    inputElement.dispatchEvent(event);
+  const insertText = async (text: string) => {
     inputElement.focus();
-    document.execCommand("insertText", false, text);
+    if (inputElement.textContent) {
+      document.execCommand("insertText", false, text);
+      return
+    }
+    const inputEvent = new InputEvent('input', {
+      bubbles: false,
+      cancelable: false,
+      inputType: 'insertText',
+      data: text
+    });
+    inputElement.dispatchEvent(inputEvent);
   };
 
   const openPopup = () => {
