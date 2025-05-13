@@ -2,70 +2,102 @@ import React, { useState, useEffect } from "react";
 import { EmojiPicker } from "frimousse";
 import { getEmojis, saveEmojis } from "../utils/storage";
 import { EmojiData } from "../utils/types";
+import Sortable from "sortablejs";
+import { useRef } from "react";
 
 const Popup: React.FC = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [emojis, setEmojis] = useState<EmojiData[]>([]);
-  const [newEmoji, setNewEmoji] = useState("");
+  const [newEmoji, setNewEmoji] = useState("😊");
   const [newText, setNewText] = useState("");
 
   useEffect(() => {
-    const loadEmojis = async () => {
-      const savedEmojis = await getEmojis();
-      setEmojis(savedEmojis);
-    };
-
-    loadEmojis();
+    (async () => {
+      const saved = await getEmojis();
+      setEmojis(saved);
+    })();
   }, []);
 
   const handleAddEmoji = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newEmoji && newText) {
-      const updatedEmojis = [...emojis, { emoji: newEmoji, text: newText }];
-      setEmojis(updatedEmojis);
-      await saveEmojis(updatedEmojis);
-      setNewEmoji("");
+      const updated = [...emojis, { emoji: newEmoji, text: newText }];
+      setEmojis(updated);
+      await saveEmojis(updated);
+      setNewEmoji("😊");
       setNewText("");
     }
   };
 
-  const handleDeleteEmoji = async (index: number) => {
-    const updatedEmojis = emojis.filter((_, i) => i !== index);
-    setEmojis(updatedEmojis);
-    await saveEmojis(updatedEmojis);
+  const handleDrag = async (evt: Sortable.SortableEvent) => {
+    const newOrder = await getEmojis();
+    if (evt.oldIndex != null && evt.newIndex != null) {
+      const movedItem = newOrder[evt.oldIndex];
+      newOrder.splice(evt.oldIndex, 1);
+      newOrder.splice(evt.newIndex, 0, movedItem);
+    }
+    setEmojis(newOrder);
+    await saveEmojis(newOrder);
   };
 
+  const handleDeleteEmoji = async (index: number) => {
+    const updated = emojis.filter((_, i) => i !== index);
+    setEmojis(updated);
+    await saveEmojis(updated);
+  };
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
     } catch (err) {
-      console.error('Erro ao copiar:', err);
+      console.error("Erro ao copiar:", err);
     }
   };
 
   return (
-    <div className="w-full p-4 font-sans text-whatsapp-green relative">
+    <div className="w-96 p-4 font-sans text-whatsapp-green relative">
       <div className="flex flex-col items-center mb-4">
-        <img src="icons/icon128.png" alt="Whats Shortcut Icon" className="w-8 h-8 mb-2" />
+        <img
+          src="icons/icon128.png"
+          alt="Whats Shortcut Icon"
+          className="w-8 h-8 mb-2"
+        />
         <h1 className="text-lg font-bold">Whats Shortcut</h1>
-        <div className="mb-2">por Pedro Lucas <u><a href="https://pedrorok.com">(pedrorok.com)</a></u></div>
+        <div className="mb-2">
+          por Pedro Lucas{" "}
+          <u>
+            <a href="https://pedrorok.com">(pedrorok.com)</a>
+          </u>
+        </div>
       </div>
+
       <section className="mb-4">
-        <h2 className="text-base font-semibold mb-2">Seus Atalhos</h2>
-        <div className="flex flex-wrap gap-1.5 text-white max-h-32 overflow-y-scroll">
+        <div
+          ref={(el) => {
+            if (el) {
+              const sortable = Sortable.create(el, {
+                animation: 150,
+                direction: "horizontal",
+                onEnd: (evt) => handleDrag(evt),
+              });
+              sortable.sort(emojis.map((_, index) => index.toString()));
+            }
+          }}
+          className="flex flex-col gap-1.5 text-white max-h-32 overflow-y-scroll"
+        >
           {emojis.map((item, index) => (
             <div
               key={index}
-              className="flex items-center bg-whatsapp-dark-green py-1 px-2.5 rounded"
+              data-id={index}
+              className="flex items-center w-max bg-whatsapp-dark-green py-1 px-2.5 rounded cursor-move"
             >
               <span className="mr-1">{item.emoji}</span>
               <button
-                onClick={() => copyToClipboard(item.text)} 
+                onClick={() => copyToClipboard(item.text)}
                 title="Copiar texto"
-                >
-                → {item.text.slice(0, 15)}
-                {item.text.length > 15 ? "..." : ""}
+              >
+                → {item.text.slice(0, 35)}
+                {item.text.length > 35 ? "..." : ""}
               </button>
               <button
                 className="bg-transparent border-none text-whatsapp-green cursor-pointer text-sm ml-1"
@@ -86,7 +118,7 @@ const Popup: React.FC = () => {
             onClick={() => setShowPicker(!showPicker)}
             className="flex-none w-8 h-8 flex items-center justify-center border text-xl border-gray-300 rounded bg-white"
           >
-            {newEmoji || "😊"}
+            {newEmoji}
           </button>
 
           {showPicker && (
@@ -95,7 +127,6 @@ const Popup: React.FC = () => {
                 className="isolate flex h-[260px] flex-col w-fit"
                 onEmojiSelect={({ emoji }) => {
                   setShowPicker(false);
-                  console.log(emoji);
                   setNewEmoji(emoji);
                 }}
               >
@@ -116,11 +147,11 @@ const Popup: React.FC = () => {
                       ),
                       Emoji: ({ emoji, ...props }) => (
                         <button
-                        className="flex size-10 items-center justify-center rounded-md text-xl data-[active]:bg-neutral-100 dark:data-[active]:bg-whatsapp-green"
-                        {...props}
-                      >
-                        {emoji.emoji}
-                      </button>              
+                          className="flex size-[2.345rem] items-center justify-center rounded-md text-xl data-[active]:bg-neutral-100 dark:data-[active]:bg-whatsapp-green"
+                          {...props}
+                        >
+                          {emoji.emoji}
+                        </button>
                       ),
                     }}
                   />
