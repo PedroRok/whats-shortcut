@@ -162,7 +162,7 @@ const Popup: React.FC = () => {
         </div>
 
         <textarea
-          placeholder="Texto do atalho"
+          placeholder="Placeholder Text"
           value={newText}
           onChange={(e) => setNewText(e.target.value)}
           className="flex-1 p-1.5 border border-gray-300 rounded max-h-24 h-8 min-h-[2rem]"
@@ -172,7 +172,7 @@ const Popup: React.FC = () => {
           type="submit"
           className="px-2.5 py-1.5 bg-whatsapp-green text-white border-none rounded hover:bg-whatsapp-dark transition-colors"
         >
-          Adicionar
+          Add
         </button>
       </form>
     </div>
