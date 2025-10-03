@@ -1,7 +1,7 @@
 {
   "name": "whatsapp-shortcut-extension",
   "version": "1.0.0",
-  "description": "Extensão para adicionar botões de atalho no WhatsApp Web",
+  "description": "Extension to add shortcut buttons to WhatsApp Web",
   "main": "index.js",
   "scripts": {
     "build:css": "tailwindcss -i ./src/index.css -o ./src/compiled.css",

@@ -64,7 +64,7 @@ const Popup: React.FC = () => {
         />
         <h1 className="text-lg font-bold">Whats Shortcut</h1>
         <div className="mb-2">
-          por Pedro Lucas{" "}
+          by PedroRok{" "}
           <u>
             <a href="https://pedrorok.com">(pedrorok.com)</a>
           </u>

@@ -5,5 +5,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.log("Extensão Whats Shortcut instalada!");
+  console.log("Whats Shortcut Extension installed!");
 });

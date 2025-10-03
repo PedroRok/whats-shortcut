@@ -1,9 +1,9 @@
 import { EmojiData } from './types';
 
 const DEFAULT_EMOJIS: EmojiData[] = [
-  { emoji: '👋', text: 'Olá! Como posso ajudar?' },
-  { emoji: '👍', text: 'Ok, entendido!' },
-  { emoji: '🙏', text: 'Muito obrigado!' },
+  { emoji: '👋', text: 'Hi, how can I help you?' },
+  { emoji: '👍', text: 'Ok, got it!' },
+  { emoji: '🙏', text: 'Thank you very much!' },
 ];
 
 export const getEmojis = async (): Promise<EmojiData[]> => {
